@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Функция для проверки баланса скобок
+int check_balance(const char *str) {
+    int stack_size = 0;
+    int len = strlen(str);
+
+    for (int i = 0; i < len; i++) {
+        if (str[i] == '(') {
+            stack_size++;
+        } else if (str[i] == ')') {
+            if (stack_size == 0) {
+                return 0; // Нет открывающей скобки для текущей закрывающей
+            }
+            stack_size--;
+        }
+    }
+
+    return stack_size == 0; // Если стек пуст, то скобки сбалансированы
+}
+
+int main() {
+    char str[100];
+
+    printf("Введите строку: ");
+    fgets(str, sizeof(str), stdin);
+
+    // Удаление символа новой строки, если он есть
+    str[strcspn(str, "\n")] = 0;
+
+    if (check_balance(str)) {
+        printf("Скобки сбалансированы.\n");
+    } else {
+        printf("Скобки не сбалансированы.\n");
+    }
+
+    return 0;
+}
